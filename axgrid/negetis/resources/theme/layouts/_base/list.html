@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% for object in objects %}
+        <div>
+            <h1>{{ object.title }}</h1>
+            <p>{{ object.content | wordwrap(78) }}</p>
+            <a href="{{ object.link }}">Read more...</a>
+        </div>
+    {% endfor %}
+{% endblock %}

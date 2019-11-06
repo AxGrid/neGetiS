@@ -3,10 +3,12 @@
 import click
 import os
 import sys
-from shutil import copytree
+from shutil import copytree, rmtree, move
 import glob
 from .log import get_logger, init_logger
 import i18n
+import subprocess
+import yaml
 
 _ = i18n.t
 log = get_logger()
@@ -63,9 +65,30 @@ def newtheme(config, verbose, name):
 @click.option('config', '--config', default="./config.yaml", help=_("path_to_config"),
               type=click.File(mode="r"))
 @click.option('verbose', '--verbose', is_flag=True, default=False, help=_("show_verbose"))
-@click.argument('name')
-def gettheme(config, verbose, name_or_path):
-    pass
+@click.option('name', '--name', default=None, help="set new name of theme")
+@click.argument('theme')
+def gettheme(config, verbose, theme, name):
+    init_logger(verbose)
+    path = os.path.join(os.path.abspath(os.path.dirname(config.name)), "theme")
+    temp_path = os.path.join(path, "__tmp")
+    if os.path.exists(os.path.join(path, "__tmp")):
+        rmtree(os.path.join(path, "__tmp"))
+
+    cmd = "git clone %s %s" % (theme, temp_path)
+    log.debug(cmd)
+    data = subprocess.check_output(cmd, shell=True, stderr=subprocess.STDOUT)
+    log.debug(data)
+    if os.path.exists(os.path.join(temp_path, "theme.yaml")):
+        rmtree(os.path.join(path, "__tmp"))
+        fatal(_("theme_wrong_repository"))
+
+    if name:
+        theme_name = name
+    else:
+        with open(os.path.join(temp_path, "theme.yaml")) as theme_config:
+            theme_yaml = yaml.safe_load(theme_config)
+            theme_name = theme_yaml.get("name", "unnamed")
+    move(temp_path, os.path.join(path, theme_name))
 
 
 def fatal(text):
