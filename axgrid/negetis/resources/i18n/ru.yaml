@@ -1,0 +1,18 @@
+ru:
+  version: "%{ver}"
+  version_info: "Static site generator"
+  version_help: "Показывает версию"
+  show_verbose: "Показывать отладочную информацию"
+  path_to_config: "Путь к файлу конфигураций сайта config.yaml"
+  site_set_name: "Укажите имя сайта"
+  site_help_folder: "Каталог сайта"
+  site_help_newsite: |
+    Создает новый сайт с именем [NAME]
+    пример: stasgen newsite my-site
+  site_path_already_exist: "Каталог с именем %{name} уже существует (%{path})"
+  site_created: |
+    Сайт создан %{path}
+    cd %{path}
+    negetis addtheme basic
+    negetis server --draft
+

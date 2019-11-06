@@ -1,0 +1,17 @@
+/bin
+/include
+/lib
+/man
+/readline-6.2.4.1-py2.7-macosx-10.7-intel.egg
+negetis.egg-info
+axgrid_negetis.egg-info
+/build
+/dist
+*.pyc
+.Python
+.idea
+/venv
+last.txt
+/axgrid/negetis/example
+/temp
+/tmp
