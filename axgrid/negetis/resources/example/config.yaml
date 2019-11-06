@@ -3,7 +3,7 @@ languageCode: en-US
 title: example
 theme: basic
 
-language:
+languages:
   ru:
     static: ./static/ru/
   en:

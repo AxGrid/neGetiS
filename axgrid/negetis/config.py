@@ -135,7 +135,7 @@ class Config:
         def __merge(current_item, data_array, current_lang=""):
             data_array = data_array or []
             if isinstance(current_item, list):
-                res = query(current_item).select(lambda x: ("", x)).to_list()
+                res = query(current_item).select(lambda x: (current_lang, x)).to_list()
             elif isinstance(current_item, str):
                 res = (current_lang, current_item)
             else:
@@ -148,13 +148,6 @@ class Config:
             if config[key]:
                 __item = config[key] if isinstance(config[key], list) or isinstance(config[key], dict) \
                     else [config[key]]
-                # if isinstance(__item, list):
-                #     item = query(__item).select(lambda x: ("", x)).to_list()
-                # elif isinstance(__item, str):
-                #     item = ("", __item)
-                # else:
-                #     item = None
-                # __data = __data if item is None else Config.merge(__data, item)
                 __data = __merge(__item, __data, "")
         if "languages" in config and lang in config["languages"] and \
                 key in config["languages"][lang]:
@@ -164,15 +157,8 @@ class Config:
                 __item = config["languages"][lang][key] if isinstance(config["languages"][lang][key], list) or \
                                                            isinstance(config["languages"][lang][key], dict) else \
                                                            [config["languages"][lang][key]]
-                # if isinstance(__item, list):
-                #     item = query(__item).select(lambda x: ("", x)).to_list()
-                # elif isinstance(__item, str):
-                #     item = ("", __item)
-                # else:
-                #     item = None
-                # __data = __data if item is None else Config.merge(__data, item)
-                __data = __merge(__item, __data, "")
 
+                __data = __merge(__item, __data, lang)
         return __data
 
     def get_static(self, lang=None):
@@ -188,26 +174,10 @@ class Config:
             return query(__data).select(__lam_path_join(path)).to_list()
 
         log.debug("read static %s" % self.theme_config)
-        __data = __collect_helper(self.theme_config, lang, self.theme_path)
-        # __data = self.__get_sub_as_static_array("static", self.theme_config, lang, None)
-        # if __data is None:
-        #     __data = [("", "static")]
-        # __data = self.__get_sub_as_static_array("static2", self.theme_config, lang, __data)
-        # __data = self.__get_sub_as_static_array("static3", self.theme_config, lang, __data)
-        # #__data = query(__data).select(lambda x: (lambda a, b: (a, os.path.join(self.theme_path, b)))(*x)).to_list()
-        # __data = query(__data).select(__lam_path_join(self.theme_path)).to_list()
-
-        __data2 = __collect_helper(self.config, lang, self.path)
-        # __data2 = self.__get_sub_as_static_array("static", self.config, lang, None)
-        # if __data2 is None:
-        #     __data2 = [("", "static")]
-        # __data2 = self.__get_sub_as_static_array("static2", self.config, lang, __data2)
-        # __data2 = self.__get_sub_as_static_array("static3", self.config, lang, __data2)
-        # __data2 = query(__data).select(__lam_path_join(self.path)).to_list()
-        # #__data2 = query(__data2).select(lambda x:  os.path.join(self.path, x)).to_list()
-        __data = Config.merge(__data, __data2)
-        log.debug("static %s" % __data)
-        return __data
+        static_data = Config.merge(__collect_helper(self.theme_config, lang, self.theme_path),
+                                   __collect_helper(self.config,       lang, self.path))
+        log.debug("static %s" % static_data)
+        return static_data
 
     def get_all_languages(self):
         """

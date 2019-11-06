@@ -2,6 +2,7 @@
 
 import click
 import os
+from os.path import join
 import sys
 from shutil import copytree, rmtree, move
 import glob
@@ -16,7 +17,7 @@ log = get_logger()
 class Builder(object):
     def __init__(self, config, target, static, clear):
         self.config = config
-        target = target or os.path.join(config.path, "public/")
+        target = target or join(config.path, "public/")
         static = static or target
         config.build["target"] = target
         config.build["static"] = static
@@ -35,9 +36,10 @@ class Builder(object):
 
     def __collect_static(self, lang=None):
         os.makedirs(self.config.build["static"], exist_ok=True)
-        for static_folder in self.config.get_static(lang=lang):
-            log.debug("copy %s to %s" % (static_folder, self.config.build["static"],))
-            copy_tree(static_folder, self.config.build["static"])
+        for (static_prefix, static_folder) in self.config.get_static(lang=lang):
+            to = join(self.config.build["static"], static_prefix)
+            log.debug("copy %s to %s" % (static_folder, to))
+            copy_tree(static_folder, to)
 
     def collect_content(self):
         pass
