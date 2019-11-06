@@ -1,0 +1,19 @@
+name: basic
+description: ""
+license: MIT
+licenseLink: https://github.com/yourname/yourtheme/blob/master/lic.md
+homepage: http://example.com
+tags: []
+features: []
+min_version: 0.1
+
+author:
+    name: "Dmitry Vysochin"
+    homepage: "http://veryevilzed.ru/"
+
+# If porting an existing theme
+original:
+    name: ""
+    homepage: ""
+    repo: ""
+

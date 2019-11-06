@@ -1,6 +1,7 @@
 # coding:utf-8
 
 import logging
+import sys
 
 
 def init_logger(verbose):
@@ -14,3 +15,7 @@ def init_logger(verbose):
 
 def get_logger(name="negetis"):
     return logging.getLogger(name)
+
+def fatal(text):
+    get_logger().fatal(text)
+    sys.exit(128)

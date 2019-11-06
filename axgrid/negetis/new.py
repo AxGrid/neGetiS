@@ -51,7 +51,7 @@ def newtheme(config, verbose, name):
     init_logger(verbose)
     if not name:
         fatal(_("theme_set_name"))
-    path = os.path.join(os.path.abspath(os.path.dirname(config.name)), "theme", name)
+    path = os.path.join(os.path.abspath(os.path.dirname(config.name)), "themes", name)
     log.debug("create new theme path: %s" % path)
     if os.path.exists(path):
         fatal(_("theme_path_already_exist", path=path, name=name))

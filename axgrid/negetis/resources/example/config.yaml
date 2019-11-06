@@ -1,0 +1,10 @@
+baseUrl: http://example.com
+languageCode: en-US
+title: example
+theme: basic
+
+language:
+  ru:
+    static: ./static/ru/
+  en:
+    static: ./static/en/
