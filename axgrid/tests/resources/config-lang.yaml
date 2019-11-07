@@ -1,0 +1,13 @@
+
+theme: test
+
+languages:
+  ru:
+    name: "Russian"
+    content: "content/ru/"
+    static: static/ru/
+    static2:
+      - static2/ru/
+      - static2/ru2/
+  en:
+    name: "English"

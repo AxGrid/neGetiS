@@ -1,13 +1,14 @@
 # coding:utf-8
 
 import os
-from os.path import join
+from os.path import join, isdir, isfile, exists
 import yaml
 from deepmerge import always_merger
 import glob
 from asq import query
 from copy import deepcopy
 import i18n
+import re
 
 from .log import get_logger, fatal
 
@@ -27,8 +28,9 @@ class Config:
         if not self.config.get("theme"):
             fatal(_("theme_not_set"))
         self.theme_path = join(self.path, "themes/", self.config["theme"])
+
         self.build = {}
-        if not os.path.exists(join(self.theme_path, "theme.yaml")):
+        if not exists(join(self.theme_path, "theme.yaml")):
             fatal(_("theme_not_found"))
 
         with open(join(self.theme_path, "theme.yaml"), "r") as yaml_file:
@@ -45,11 +47,49 @@ class Config:
             "static3": self.theme_config.get("static3", None),
         }
         self.data = self.merge(self.theme_config, self.config)
+        self.defaultLanguage = self.data.get("defaultLanguage", "")
+
+        self.is_different_content_root = query(self.data.get("languages", {}).items()).any(lambda x: "content" in x[1])
+        if self.is_different_content_root:
+            log.info("content different root mode")
+            for wrong_language in query(self.data.get("languages", {}).items())\
+                    .where(lambda x: "content" not in x[1])\
+                    .select(lambda x: x[0]).to_list():
+                log.warn("not set language.%s.content for content different root mode" % wrong_language)
+
+        re_keys = query(self.get_all_languages_keys()).aggregate(lambda a, b: a+"|"+b)
+
+        self.is_different_target_root = query(self.data.get("languages", {}).items()).any(lambda x: "target" in x[1])
+        if self.is_different_target_root:
+            log.info("target different root mode")
+            for wrong_language in query(self.data.get("languages", {}).items())\
+                    .where(lambda x: "target" not in x[1])\
+                    .select(lambda x: x[0]).to_list():
+                log.warn("not set language.%s.target for target different root mode" % wrong_language)
+
+
+        if len(re_keys) == 0:
+            self.re_content_multi_language_folder = re.compile("(?P<name>.*)$")
+            self.re_content_multi_language_content = re.compile("(?P<name>.*)\\.(?P<ext>\\w+)$")
+        else:
+            self.re_content_multi_language_folder = re.compile("(?P<name>.*)\\.(?P<lang>[%s])$" % re_keys)
+            self.re_content_multi_language_content = re.compile("(?P<name>.*)\\.(?P<lang>[%s])\\.(?P<ext>\\w+)$" % re_keys)
+        # Mode:
+
+    def __append_path(self, path):
+        if os.path.isabs(path):
+            return path
+        else:
+            return join(self.path, path)
 
     @staticmethod
     def merge(a, b):
         _a = deepcopy(a)
         return always_merger.merge(_a, b)
+
+    def get_content_root(self, lang=None):
+        return self.__append_path(self.get_language_variable("content", self.config, lang, "content/"))
+
 
     @staticmethod
     def __get_sub_data(config, lang=None, data_root_path=None, __data={}):
@@ -59,7 +99,7 @@ class Config:
                 "data" in config["languages"][lang]:
             __data = Config.merge(__data, config["languages"][lang]["data"])
 
-        if data_root_path and os.path.exists(data_root_path):
+        if data_root_path and exists(data_root_path):
             files = glob.glob(data_root_path + "*.yaml")
             if lang:
                 files += glob.glob(data_root_path + "*.{lang}.yaml".format(lang=lang))
@@ -130,6 +170,9 @@ class Config:
                 __data = Config.merge(__data, item)
         return __data
 
+
+
+
     @staticmethod
     def __get_sub_as_static_array(key, config, lang, __data):
         def __merge(current_item, data_array, current_lang=""):
@@ -168,7 +211,7 @@ class Config:
         def __collect_helper(config, language, path):
             __data = self.__get_sub_as_static_array("static", config, language, None)
             if __data is None:
-                __data = [("", "static")]
+                __data = [("", "static/")]
             __data = self.__get_sub_as_static_array("static2", config, language, __data)
             __data = self.__get_sub_as_static_array("static3", config, language, __data)
             return query(__data).select(__lam_path_join(path)).to_list()
@@ -186,8 +229,8 @@ class Config:
         """
         languages = self.data.get("languages")
         if len(languages) == 0:
-            return {self.config.get("defaultLanguage", ""): {
-                "name": self.config.get("defaultLanguage", ""),
+            return {self.defaultLanguage: {
+                "name": self.defaultLanguage,
                 "url": "/",
             }}
         else:
@@ -197,7 +240,6 @@ class Config:
         """
         :return: список всех ключей
         """
-        print(self.get_all_languages())
         return list(self.get_all_languages().keys())
 
     # noinspection PyDictCreation
