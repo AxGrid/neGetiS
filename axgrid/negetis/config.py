@@ -48,7 +48,7 @@ class Config:
         }
         self.data = self.merge(self.theme_config, self.config)
         self.defaultLanguage = self.data.get("defaultLanguage", "")
-
+        # check modes
         self.is_different_content_root = query(self.data.get("languages", {}).items()).any(lambda x: "content" in x[1])
         if self.is_different_content_root:
             log.info("content different root mode")
@@ -66,7 +66,6 @@ class Config:
                     .where(lambda x: "target" not in x[1])\
                     .select(lambda x: x[0]).to_list():
                 log.warn("not set language.%s.target for target different root mode" % wrong_language)
-
 
         if len(re_keys) == 0:
             self.re_content_multi_language_folder = re.compile("(?P<name>.*)$")

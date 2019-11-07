@@ -6,5 +6,7 @@ theme: basic
 languages:
   ru:
     static: ./static/ru/
+    target: ru/
   en:
     static: ./static/en/
+    target: en/

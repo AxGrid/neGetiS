@@ -23,9 +23,12 @@ class Builder(object):
         config.build["target"] = target
         config.build["static"] = static
         if clear:
+
             if os.path.exists(config.build["target"]):
+                log.debug("clear %s" % config.build["target"])
                 rmtree(config.build["target"])
             if os.path.exists(config.build["static"]):
+                log.debug("clear %s" % config.build["static"])
                 rmtree(config.build["static"])
 
         loader = ChoiceLoader([
@@ -45,7 +48,10 @@ class Builder(object):
     def __collect_static(self, lang=None):
         os.makedirs(self.config.build["static"], exist_ok=True)
         for (static_prefix, static_folder) in self.config.get_static(lang=lang):
-            to = join(self.config.build["static"], static_prefix)
+            if self.config.is_different_target_root:
+                to = join(self.config.build["static"], self.config.get_language_variable("target", self.config.config, lang, lang+"/"))
+            else:
+                to = join(self.config.build["static"], static_prefix)
             log.debug("copy %s to %s" % (static_folder, to))
             copy_tree(static_folder, to)
 
