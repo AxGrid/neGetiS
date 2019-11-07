@@ -47,7 +47,7 @@ class Config:
             "static3": self.theme_config.get("static3", None),
         }
         self.data = self.merge(self.theme_config, self.config)
-        self.defaultLanguage = self.data.get("defaultLanguage", "")
+        self.default_language = self.data.get("defaultLanguage", "")
         # check modes
         self.is_different_content_root = query(self.data.get("languages", {}).items()).any(lambda x: "content" in x[1])
         if self.is_different_content_root:
@@ -228,8 +228,8 @@ class Config:
         """
         languages = self.data.get("languages")
         if len(languages) == 0:
-            return {self.defaultLanguage: {
-                "name": self.defaultLanguage,
+            return {self.default_language: {
+                "name": self.default_language,
                 "url": "/",
             }}
         else:

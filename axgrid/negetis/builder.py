@@ -4,8 +4,8 @@ import click
 import os
 from os.path import join
 import sys
-from shutil import copytree, rmtree, move
-import glob
+from shutil import copytree, rmtree, move, copyfile
+from glob import glob
 from .log import get_logger, fatal
 import i18n
 from distutils.dir_util import copy_tree
@@ -58,11 +58,33 @@ class Builder(object):
     def collect_content(self):
         languages = self.config.get_all_languages_keys()
         for lang in languages:
-            log.debug("collect content for lang %s" % lang)
-            self.__collect_content(lang=lang)
+            log.debug("collect content for lang %s" % lang or "default")
+            if self.config.is_different_content_root:
+                self.__collect_content_different_root_mode(lang)
+            else:
+                self.__collect_content(lang=lang)
+
+    def __collect_content_different_root_mode(self, lang=None):
+        os.makedirs(self.config.build["target"], exist_ok=True)
+        content_folder = self.config.get_content_root(lang)
+        for item in glob(content_folder+"/**/*", recursive=True):
+            item_path = item.replace(content_folder, "")
+
+            if self.config.is_different_target_root:
+                to = join(self.config.build["target"],  self.config.get_language_variable("target", self.config.config, lang, lang + "/"))
+            else:
+                if self.config.default_language == lang:
+                    to = self.config.build["target"]
+                else:
+                    to = join(self.config.build["target"], lang + "/")
+
+            if os.path.isdir(item):
+                print("DIR  ", item_path, "to", join(to, item_path))
+            if os.path.isfile(item):
+                print("FILE", item_path, "to", join(to, item_path))
+
 
     def __collect_content(self, lang=None):
         os.makedirs(self.config.build["target"], exist_ok=True)
         pass
-
 

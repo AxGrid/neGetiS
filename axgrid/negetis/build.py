@@ -36,7 +36,8 @@ def build(verbose, target, static, clear, config):
     init_logger(verbose)
     config = Config(config)
     builder = Builder(config, target, static, clear)
-    builder.collect_static()
+    #builder.collect_static()
+    builder.collect_content()
 
 
 

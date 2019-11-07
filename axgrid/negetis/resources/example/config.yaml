@@ -2,11 +2,14 @@ baseUrl: http://example.com
 languageCode: en-US
 title: example
 theme: basic
+defaultLanguage: en
 
 languages:
   ru:
     static: ./static/ru/
-    target: ru/
+    #target: ru/
+    content: content/ru/
   en:
     static: ./static/en/
-    target: en/
+    #target: en/
+    content: content/en/
