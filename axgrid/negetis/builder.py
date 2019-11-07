@@ -7,6 +7,7 @@ import sys
 from shutil import copytree, rmtree, move, copyfile
 from glob import glob
 from .log import get_logger, fatal
+from .processor import Processor
 import i18n
 from distutils.dir_util import copy_tree
 from jinja2 import Environment, FileSystemLoader, ChoiceLoader, contextfunction
@@ -23,20 +24,13 @@ class Builder(object):
         config.build["target"] = target
         config.build["static"] = static
         if clear:
-
             if os.path.exists(config.build["target"]):
                 log.debug("clear %s" % config.build["target"])
                 rmtree(config.build["target"])
             if os.path.exists(config.build["static"]):
                 log.debug("clear %s" % config.build["static"])
                 rmtree(config.build["static"])
-
-        loader = ChoiceLoader([
-            FileSystemLoader(self.config.theme_path + "/layouts/_default/"),
-            FileSystemLoader(self.config.theme_path + "/layouts/partials/"),
-            FileSystemLoader(self.config.theme_path + "/layouts/")
-        ])
-        self.env = Environment(loader=loader)
+        self.processor = Processor(self.config)
 
     def collect_static(self):
         languages = self.config.get_all_languages_keys()
@@ -81,10 +75,23 @@ class Builder(object):
             if os.path.isdir(item):
                 print("DIR  ", item_path, "to", join(to, item_path))
             if os.path.isfile(item):
-                print("FILE", item_path, "to", join(to, item_path))
+                if item.endswith(".md"):
 
+                    only_file_name = os.path.splitext(os.path.basename(item))[0]
+                    only_dir = os.path.dirname(item_path)
+                    html_path = join(to, only_dir, only_file_name) + ".html"
+                    log.debug("process content file %s to %s" % (item, html_path))
+                    content = self.processor.process(item, lang)
+                    os.makedirs(join(to, only_dir), exist_ok=True)
+                    with open(html_path, "w") as html_file:
+                        html_file.write(content)
+                else:
+                    log.debug("process media file %s to %s" % (item, join(to, item_path)))
+                    copyfile(item, join(to, item_path))
 
     def __collect_content(self, lang=None):
         os.makedirs(self.config.build["target"], exist_ok=True)
         pass
+
+
 

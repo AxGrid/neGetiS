@@ -3,9 +3,7 @@
     {% include 'head.html' %}
     <body>
         {% include 'header.html' %}
-        <div id="content">
-        {% block content %}{% endblock %}
-        </div>
+        <div id="content">{% block content %}{% endblock %}</div>
         {% include 'footer.html' %}
     </body>
 </html>
