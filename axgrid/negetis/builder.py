@@ -50,24 +50,22 @@ class Builder(object):
         languages = self.config.get_all_languages_keys()
         for lang in languages:
             log.debug("collect content for lang %s" % lang or "default")
-            if self.config.is_different_content_root: # TODO: это не разный конент а разные target
-                self.__collect_content_different_root_mode(lang=lang)
+            if self.config.is_different_content_root:
+                self.__collect_content_different_content_root_mode(lang=lang)
             else:
-                self.__collect_content(lang=lang)
+                self.__collect_content_different_content_root_mode(lang=lang)
 
-    def __collect_content_different_root_mode(self, lang=None):
+    def __collect_content_different_content_root_mode(self, lang=None):
+        """
+        Контент находится в разных каталогах content/en content/ru
+        :param lang:
+        :return:
+        """
         os.makedirs(self.config.build["target"], exist_ok=True)
         content_folder = self.config.get_content_root(lang)
         for item in glob(content_folder+"/**/*", recursive=True):
             item_path = item.replace(content_folder, "")
-
-            if self.config.is_different_target_root:
-                to = join(self.config.build["target"],  self.config.get_language_variable("target", self.config.config, lang, lang + "/"))
-            else:
-                if self.config.default_language == lang:
-                    to = self.config.build["target"]
-                else:
-                    to = join(self.config.build["target"], lang + "/")
+            to = self.config.get_target_part_root(lang)
 
             if os.path.isdir(item):
                 print("DIR  ", item_path, "to", join(to, item_path))
@@ -86,8 +84,10 @@ class Builder(object):
                     os.makedirs(dirname(join(to, item_path)), exist_ok=True)
                     copyfile(item, join(to, item_path))
 
-    def __collect_content(self, lang=None):
-        os.makedirs(self.config.build["target"], exist_ok=True)
+    def __collect_content_no_different_content_root_mode(self, lang=None):
+        to = self.config.get_target_part_root(lang)
+        os.makedirs(to, exist_ok=True)
+
         pass
 
 

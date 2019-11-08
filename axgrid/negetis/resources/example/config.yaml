@@ -7,9 +7,9 @@ defaultLanguage: en
 languages:
   ru:
     static: ./static/ru/
-    #target: ru/
-    content: content/ru/
+    target: ru/
+    content: content/rus/
   en:
     static: ./static/en/
-    #target: en/
+    target: en/
     content: content/en/

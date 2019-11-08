@@ -100,7 +100,13 @@ class Config:
         return self.__append_path(self.get_language_variable("content", self.config, lang, "content/"))
 
     def get_target_part_root(self, lang=None):
-        pass
+        if self.is_different_target_root:
+            return join(self.build["target"], self.get_language_variable("target", self.config, lang, lang + "/"))
+        else:
+            if self.default_language == lang:
+                return self.build["target"]
+            else:
+                return join(self.build["target"], lang + "/")
 
     @staticmethod
     def __get_sub_data(config, lang=None, data_root_path=None, __data={}):
