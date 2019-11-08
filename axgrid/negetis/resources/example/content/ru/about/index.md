@@ -1,10 +1,10 @@
 ---
-title: ABOUT EN
+title: ABOUT RU
 ---
 
-ABOUT EN
+ABOUT
 =====
 
-About En page
+About page
 
 ![Language Image]( {{ static('/lang.png') }} )

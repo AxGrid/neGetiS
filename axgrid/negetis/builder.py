@@ -2,7 +2,7 @@
 
 import click
 import os
-from os.path import join
+from os.path import join, dirname
 import sys
 from shutil import copytree, rmtree, move, copyfile
 from glob import glob
@@ -42,10 +42,7 @@ class Builder(object):
     def __collect_static(self, lang=None):
         os.makedirs(self.config.build["static"], exist_ok=True)
         for (static_prefix, static_folder) in self.config.get_static(lang=lang):
-            if self.config.is_different_target_root:
-                to = join(self.config.build["static"], self.config.get_language_variable("target", self.config.config, lang, lang+"/"))
-            else:
-                to = join(self.config.build["static"], static_prefix)
+            to = self.config.get_static_part_root(lang, static_prefix)
             log.debug("copy %s to %s" % (static_folder, to))
             copy_tree(static_folder, to)
 
@@ -76,17 +73,17 @@ class Builder(object):
                 print("DIR  ", item_path, "to", join(to, item_path))
             if os.path.isfile(item):
                 if item.endswith(".md"):
-
                     only_file_name = os.path.splitext(os.path.basename(item))[0]
                     only_dir = os.path.dirname(item_path)
                     html_path = join(to, only_dir, only_file_name) + ".html"
                     log.debug("process content file %s to %s" % (item, html_path))
-                    content = self.processor.process(item, lang)
+                    content = self.processor.process(item, item_path, lang)
                     os.makedirs(join(to, only_dir), exist_ok=True)
                     with open(html_path, "w") as html_file:
                         html_file.write(content)
                 else:
                     log.debug("process media file %s to %s" % (item, join(to, item_path)))
+                    os.makedirs(dirname(join(to, item_path)), exist_ok=True)
                     copyfile(item, join(to, item_path))
 
     def __collect_content(self, lang=None):

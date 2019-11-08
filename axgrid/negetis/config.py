@@ -81,6 +81,17 @@ class Config:
         else:
             return join(self.path, path)
 
+    def get_static_part_root(self, lang=None, prefix=None):
+        static_prefix = prefix or '' if lang == self.default_language else lang
+        if self.is_different_target_root:
+            return join(self.build["static"],
+                        self.get_language_variable("target", self.config, lang, lang + "/"))
+        else:
+            return join(self.build["static"], static_prefix)
+
+    def get_target_part_root(self, lang=None):
+        pass
+
     @staticmethod
     def merge(a, b):
         _a = deepcopy(a)
@@ -88,7 +99,6 @@ class Config:
 
     def get_content_root(self, lang=None):
         return self.__append_path(self.get_language_variable("content", self.config, lang, "content/"))
-
 
     @staticmethod
     def __get_sub_data(config, lang=None, data_root_path=None, __data={}):
