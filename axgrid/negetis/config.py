@@ -89,8 +89,7 @@ class Config:
         else:
             return join(self.build["static"], static_prefix)
 
-    def get_target_part_root(self, lang=None):
-        pass
+
 
     @staticmethod
     def merge(a, b):
@@ -99,6 +98,9 @@ class Config:
 
     def get_content_root(self, lang=None):
         return self.__append_path(self.get_language_variable("content", self.config, lang, "content/"))
+
+    def get_target_part_root(self, lang=None):
+        pass
 
     @staticmethod
     def __get_sub_data(config, lang=None, data_root_path=None, __data={}):

@@ -50,8 +50,8 @@ class Builder(object):
         languages = self.config.get_all_languages_keys()
         for lang in languages:
             log.debug("collect content for lang %s" % lang or "default")
-            if self.config.is_different_content_root:
-                self.__collect_content_different_root_mode(lang)
+            if self.config.is_different_content_root: # TODO: это не разный конент а разные target
+                self.__collect_content_different_root_mode(lang=lang)
             else:
                 self.__collect_content(lang=lang)
 

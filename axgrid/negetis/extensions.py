@@ -24,9 +24,6 @@ class Extensions(object):
 
     @contextfunction
     def static(self, context, path):
-
-        print("Config", self.config)
-
         lang = context.get("lang", self.config.default_language)
 
         # /<lang>/path.file
@@ -39,11 +36,21 @@ class Extensions(object):
             __path = normpath(self.relativity_single_target(path, dirname(context["path"]), lang))
 
         log.debug("result %s static(%s) = %s" % (context["path"], path, __path))
-        print("PATH:", __path)
-        print("DIR :", dirname(context["path"]))
-        print("JOIN:", self.__join(self.config.build["target"], dirname(context["path"])))
-        print("REL :", relpath(__path, self.__join(self.config.build["target"], dirname(context["path"]))))
-        return relpath(__path, self.__join(self.config.build["target"], dirname(context["path"])))
+        # print("PATH:", __path)
+        # print("DIR :", dirname(context["path"]))
+        # print("JOIN:", self.__join(self.config.build["target"], dirname(context["path"])))
+        # print("REL :", relpath(__path, self.__join(self.config.build["target"], dirname(context["path"]))))
+
+        if self.config.is_different_target_root:
+            to = join(self.config.build["target"],
+                      self.config.get_language_variable("target", self.config.config, lang, lang + "/"))
+        else:
+            if self.config.default_language == lang:
+                to = self.config.build["target"]
+            else:
+                to = join(self.config.build["target"], lang + "/")
+
+        return relpath(__path, self.__join(to, dirname(context["path"])))
 
         # #to = self.config.get_static_part_root(lang)
         #
