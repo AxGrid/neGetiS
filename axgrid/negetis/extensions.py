@@ -41,8 +41,25 @@ class Extensions(object):
     def __join(*args):
         return normpath(join(*args))
 
+    def __static_search_paths(self, lang):
+        return [self.config.get_static_part_root(lang),
+                self.config.get_target_part_root(lang),
+                self.config.build["static"]]
+
+    def __file_abs(self, file_url_path, page_url):
+        return file_url_path if isabs(file_url_path) else self.__join(page_url, file_url_path)
+
     def relativity_different_target(self, file_url_path, page_url, lang=None):
+        """
+        Отстраивает контент для разных целей /ru/ /en/ ...
+        :param file_url_path:
+        :param page_url:
+        :param lang:
+        :return:
+        """
         def __search(static_path, file_name):
+            print ("__search ", path, self.__relativity(file_url_path))
+
             __path = join(static_path, lang, file_name)
             if exists(__path):
                 return __path
@@ -50,24 +67,21 @@ class Extensions(object):
             if exists(__path):
                 return __path
             return None
-
-        statics = [self.config.get_static_part_root(lang), self.config.build["static"]]
-        if not isabs(file_url_path):
-            file_url_path = self.__join(page_url, file_url_path)
-
-        for path in statics:
-            # if isabs(file_url):
-            #
-            #     return join(self.config.get_static_part_root(lang), file_url)
-            # else:
-            #     return join(self.config.get_static_part_root(lang), page_url, file_url)
+        file_url_path = self.__file_abs(file_url_path, page_url)
+        for path in self.__static_search_paths(lang):
             __result = __search(path, self.__relativity(file_url_path))
             if __result:
                 return __result
         return join(self.config.build["static"], self.__relativity(file_url_path))
 
-
     def relativity_single_target(self, file_url_path, page_url, lang=None):
+        """
+        Отстраивает контент для единой цели / /en/
+        :param file_url_path:
+        :param page_url:
+        :param lang:
+        :return:
+        """
         def __search(static_path, file_name):
             __path = join(static_path, lang, file_name)
             if exists(__path):
@@ -84,12 +98,9 @@ class Extensions(object):
                 return __path
             return None
 
-        statics = [self.config.get_static_part_root(lang), self.config.build["static"]]
-        if not isabs(file_url_path):
-            file_url_path = self.__join(page_url, file_url_path)
+        file_url_path = self.__file_abs(file_url_path, page_url)
 
-        #if isabs(file_url_path):
-        for path in statics:
+        for path in self.__static_search_paths(lang):
             __result = __search(path, self.__relativity(file_url_path))
             if __result:
                 return __result
