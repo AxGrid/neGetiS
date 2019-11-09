@@ -9,7 +9,7 @@ class TagExtender(object):
     """
     Модифицирует теги после марк дауна
     config:
-        tags_extender:
+        tag_morph:
             p:
                 tag: div
                 class: my-class
@@ -17,16 +17,19 @@ class TagExtender(object):
                     "x-id":
                         - 15
                         - 17
-            code:
-                - python:
-
+            ".//code[@class=\"python\"]":
+                tag: code
+                class: my-class
+                attr:
+                    "x-id":
+                        - 15
+                        - 17
 
     """
     def __init__(self, config, meta):
         self.config = config
         self.meta = meta
-
-
+        # TODO: Join tag_morph's
 
     def replace(self, html):
         page = lxml.html.fromstring(html)
