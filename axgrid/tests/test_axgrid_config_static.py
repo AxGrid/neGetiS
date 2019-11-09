@@ -47,15 +47,15 @@ class TestAxGridConfigStatic(unittest.TestCase):
     def test_config_content_basic(self):
         config = self.__read_config("config-basic.yaml")
         self.assertTrue(len(config.get_all_languages_keys()) == 1)
-        content = config.get_content()
+        content = config.get_content_root()
         self.assertEqual(content, join(__RESOURCES__, "content/"))
 
     def test_config_content_multi_language(self):
         config = self.__read_config("config-lang.yaml")
         self.assertTrue(len(config.get_all_languages_keys()) > 1)
-        content = config.get_content("ru")
+        content = config.get_content_root("ru")
         self.assertEqual(content, join(__RESOURCES__, "content/", "ru/"))
-        content = config.get_content()
+        content = config.get_content_root()
         self.assertEqual(content, join(__RESOURCES__, "content/"))
 
 

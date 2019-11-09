@@ -1,7 +1,7 @@
 # coding:utf-8
 
 import os
-from os.path import join, isdir, isfile, exists
+from os.path import join, isdir, isfile, exists, isabs
 import yaml
 from deepmerge import always_merger
 import glob
@@ -55,7 +55,7 @@ class Config:
             for wrong_language in query(self.data.get("languages", {}).items())\
                     .where(lambda x: "content" not in x[1])\
                     .select(lambda x: x[0]).to_list():
-                log.warn("not set language.%s.content for content different root mode" % wrong_language)
+                log.warning("not set language.%s.content for content different root mode" % wrong_language)
 
         re_keys = query(self.get_all_languages_keys()).aggregate(lambda a, b: a+"|"+b)
 
@@ -65,7 +65,7 @@ class Config:
             for wrong_language in query(self.data.get("languages", {}).items())\
                     .where(lambda x: "target" not in x[1])\
                     .select(lambda x: x[0]).to_list():
-                log.warn("not set language.%s.target for target different root mode" % wrong_language)
+                log.warning("not set language.%s.target for target different root mode" % wrong_language)
 
         if len(re_keys) == 0:
             self.re_content_multi_language_folder = re.compile("(?P<name>.*)$")
@@ -82,12 +82,26 @@ class Config:
             return join(self.path, path)
 
     def get_static_part_root(self, lang=None, prefix=None):
+
         static_prefix = prefix or '' if lang == self.default_language else lang
+
+        if self.is_different_target_root and not lang:
+            return ''
+        default = join(lang, "static/") if self.is_different_target_root else "static/"
+        static_root = self.get_language_variable("static_target", self.config, lang, default)
+
+        if not isabs(static_root):
+            static_root = join(self.build["target"], static_root)
+
+        if not lang:
+            return static_root
+
         if self.is_different_target_root:
-            return join(self.build["static"],
-                        self.get_language_variable("target", self.config, lang, lang + "/"))
+            return static_root
+            # return join(static_root,
+            #             self.get_language_variable("target", self.config, lang, lang + "/"))
         else:
-            return join(self.build["static"], static_prefix)
+            return join(static_root, static_prefix)
 
 
 

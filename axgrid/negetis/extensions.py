@@ -44,7 +44,8 @@ class Extensions(object):
     def __static_search_paths(self, lang):
         return [self.config.get_static_part_root(lang),
                 self.config.get_target_part_root(lang),
-                self.config.build["static"]]
+                self.config.get_static_part_root()
+                ]
 
     def __file_abs(self, file_url_path, page_url):
         return file_url_path if isabs(file_url_path) else self.__join(page_url, file_url_path)
@@ -72,7 +73,7 @@ class Extensions(object):
             __result = __search(path, self.__relativity(file_url_path))
             if __result:
                 return __result
-        return join(self.config.build["static"], self.__relativity(file_url_path))
+        return join(self.config.get_static_part_root(), self.__relativity(file_url_path))
 
     def relativity_single_target(self, file_url_path, page_url, lang=None):
         """
@@ -104,7 +105,7 @@ class Extensions(object):
             __result = __search(path, self.__relativity(file_url_path))
             if __result:
                 return __result
-        return join(self.config.build["static"], self.__relativity(file_url_path))
+        return join(self.config.get_static_part_root(), self.__relativity(file_url_path))
 
 
 

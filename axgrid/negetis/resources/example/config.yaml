@@ -6,10 +6,11 @@ defaultLanguage: en
 
 languages:
   ru:
-    static: ./static/ru/
+    static: static/ru/
     target: ru/
+    static_target: ru/static2/
     content: content/rus/
   en:
-    static: ./static/en/
+    static: static/en/
     target: en/
     content: content/en/

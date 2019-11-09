@@ -2,7 +2,7 @@
 
 import click
 import os
-from os.path import join, dirname
+from os.path import join, dirname, isabs
 import sys
 from shutil import copytree, rmtree, move, copyfile
 from glob import glob
@@ -17,30 +17,32 @@ log = get_logger()
 
 
 class Builder(object):
-    def __init__(self, config, target, static, clear):
+    def __init__(self, config, target, clear):
         self.config = config
-        target = target or join(config.path, "public/")
-        static = static or join(target, "static/")
-        config.build["target"] = target
-        config.build["static"] = static
+        target = target or "public/"
+
+        if not isabs(target):
+            target = join(self.config.path, target)
+
+        self.config.build["target"] = target
         if clear:
             if os.path.exists(config.build["target"]):
                 log.debug("clear %s" % config.build["target"])
                 rmtree(config.build["target"])
-            if os.path.exists(config.build["static"]):
-                log.debug("clear %s" % config.build["static"])
-                rmtree(config.build["static"])
         self.processor = Processor(self.config)
 
     def collect_static(self):
         languages = self.config.get_all_languages_keys()
         log.debug("language count %d" % len(languages))
         for lang in languages:
-            log.debug("collect static for lang %s" % lang)
             self.__collect_static(lang=lang)
 
     def __collect_static(self, lang=None):
-        os.makedirs(self.config.build["static"], exist_ok=True)
+        static_root = self.config.get_static_part_root(lang)
+        log.debug("collect static for lang %s to %s", lang, static_root)
+
+        #os.makedirs(self.config.build["static"], exist_ok=True)
+        os.makedirs(static_root, exist_ok=True)
         for (static_prefix, static_folder) in self.config.get_static(lang=lang):
             to = self.config.get_static_part_root(lang, static_prefix)
             log.debug("copy %s to %s" % (static_folder, to))
