@@ -82,7 +82,6 @@ class Config:
             return join(self.path, path)
 
     def get_static_part_root(self, lang=None, prefix=None):
-
         static_prefix = prefix or '' if lang == self.default_language else lang
 
         if self.is_different_target_root and not lang:

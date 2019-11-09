@@ -10,6 +10,7 @@ import codecs
 import markdown
 import yaml
 from .extensions import Extensions
+from .menu import Menu
 
 _ = i18n.t
 log = get_logger()
@@ -20,6 +21,7 @@ class Processor(object):
 
     def __init__(self, config):
         self.config = config
+        self.menu = Menu(self.config)
         try:
             log.debug("add loaders %s" % self.config.theme_path + "/layouts/")
             loader = ChoiceLoader([
@@ -34,12 +36,12 @@ class Processor(object):
             fatal("create environment exception %s" % e)
 
     def process(self, file_path, url_path, lang=None, contents=[], static=[]):
-
         __params = {
             "config": self.config.data,
             "path": url_path,
             "lang": lang,
-            "static_paths": static
+            "static_paths": static,
+            "menu": self.menu.get_menu(lang, url_path)
         }
 
         file_content = self.__get_content(file_path, __params)
