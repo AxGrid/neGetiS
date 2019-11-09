@@ -37,7 +37,7 @@ class Menu(object):
                 if "children" in item:
                     item["children"] = __set_active(item["children"], path, link)
 
-        menu = self.config.get_menu(self, lang=lang) or []
+        menu = self.config.get_menu(lang=lang) or []
         menu = __strip(menu, level)
         menu = __set_active(menu, path)
         return menu

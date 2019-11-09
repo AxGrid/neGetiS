@@ -1,0 +1,12 @@
+baseUrl: http://negetis.com
+languageCode: en-US
+title: neGetiS
+theme: negetis
+
+languages:
+  ru:
+    static2: static/ru/
+    #target: ru/
+    static_target: ru/static/
+    content: content/ru/
+

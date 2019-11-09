@@ -1,7 +1,5 @@
 # coding:utf-8
 
-import click
-import os
 from .log import get_logger, fatal
 import i18n
 from jinja2 import Environment, FileSystemLoader, ChoiceLoader, contextfunction
@@ -63,7 +61,9 @@ class Processor(object):
         if m:
             meta = yaml.safe_load(m.groupdict().get("meta", ""))
             meta["type"] = "markdown"
-            content = markdown.markdown(m.groupdict().get("content", ""))
+            content = m.groupdict().get("content", "")
+            if content:
+                content = markdown.markdown(content, extensions=["extra", "attr_list"])
             return {"meta": meta, "content": content}
         else:
             return {"meta": {"type": "text"}, "content": text}
