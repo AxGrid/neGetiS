@@ -7,10 +7,10 @@ defaultLanguage: en
 languages:
   ru:
     static: static/ru/
-    target: ru/
-    static_target: ru/static2/
+    #target: ru/
+    #static_target: ru/static2/
     content: content/rus/
   en:
     static: static/en/
-    target: en/
+    #target: en/
     content: content/en/

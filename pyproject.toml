@@ -1,14 +1,22 @@
 [tool.poetry]
 name = "negetis"
-version = "0.1.0"
+version = "0.1.3"
 description = "Static site generator"
 authors = ["Dmitry Vysochin <dmitry.vysochin@gmail.com>"]
 license = "MIT"
+homepage = "http://negetis.com"
+repository = "https://github.com/AxGrid/neGetiS"
+keywords = ["static", "generator", "web", "html", "markdown"]
+readme = "README.md"
+classifiers = [
+    "Topic :: Software Development :: Build Tools"
+]
+
 packages = [
-    { include = "negetis", from="axgrid" },
+    { include = "negetis" },
 ]
 include = [
-	"axgrid/negetis/resources"
+	"negetis/resources"
 ]
 
 
@@ -31,7 +39,7 @@ pillow = "^6.2"
 
 
 [tool.poetry.scripts]
-negetis = 'axgrid.negetis.main:run'
+negetis = 'negetis.main:run'
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

@@ -3,7 +3,7 @@
 import unittest
 import os
 from os.path import join
-from axgrid.negetis.config import Config
+from negetis.config import Config
 import tracemalloc
 from asq import query
 

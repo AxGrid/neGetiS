@@ -30,7 +30,12 @@ def cli():
 def version(verbose):
     init_logger(verbose)
     log.debug("Static site generator")
-    log.info(_("version", ver=__version__))
+    import pkg_resources
+    try:
+        my_version = pkg_resources.get_distribution('negetis').version
+    except:
+        my_version = "dev"
+    log.info(_("version", ver=my_version))
 
 
 def run():
