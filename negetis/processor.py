@@ -15,7 +15,7 @@ log = get_logger()
 
 
 class Processor(object):
-    re_mark_doc = re.compile("^---\n(?P<meta>.*)---(\n(?P<content>.*)|)$", re.MULTILINE | re.DOTALL)
+    re_mark_doc = re.compile("^---\n(?P<meta>.*?)---(\n(?P<content>.*)|)$", re.MULTILINE | re.DOTALL)
 
     def __init__(self, config):
         self.config = config

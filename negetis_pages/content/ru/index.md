@@ -6,3 +6,8 @@ layout: doc.html
 
 How Are u?
 {: .lead}
+
+```python
+def static(path):
+    pass
+```
