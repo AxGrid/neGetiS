@@ -79,6 +79,8 @@ class Builder(object):
                     html_path = join(to, only_dir, only_file_name) + ".html"
                     log.debug("process content file %s to %s" % (item, html_path))
                     content = self.processor.process(item, item_path, lang)
+                    if not content:
+                        continue
                     os.makedirs(join(to, only_dir), exist_ok=True)
                     with open(html_path, "w") as html_file:
                         html_file.write(content)

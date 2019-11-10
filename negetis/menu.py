@@ -1,6 +1,8 @@
 # coding:utf-8
 
 from os.path import join, isabs
+
+
 class Menu(object):
     def __init__(self, config):
         self.config = config

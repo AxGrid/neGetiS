@@ -10,6 +10,7 @@ import yaml
 from .extensions import Extensions
 from .menu import Menu
 from .tagextender import TagExtender
+from asq import query
 
 _ = i18n.t
 log = get_logger()
@@ -17,6 +18,7 @@ log = get_logger()
 
 class Processor(object):
     re_mark_doc = re.compile("^---\n(?P<meta>.*?)---(\n(?P<content>.*)|)$", re.MULTILINE | re.DOTALL)
+    re_split = re.compile("^---SPLIT---$", re.MULTILINE | re.DOTALL)
 
     def __init__(self, config):
         self.config = config
@@ -29,7 +31,7 @@ class Processor(object):
                 FileSystemLoader(self.config.theme_path + "/layouts/")
             ])
             self.env = Environment(loader=loader)
-            self.extensions = Extensions(self.config, self.env)
+            self.extensions = Extensions(self.config, self.env, self)
 
         except Exception as e:
             fatal("create environment exception %s" % e)
@@ -38,12 +40,15 @@ class Processor(object):
         __params = {
             "config": self.config.data,
             "path": url_path,
+            "file_path": file_path,
             "lang": lang,
             "static_paths": static,
             "menu": self.menu.get_menu(lang, url_path)
         }
 
-        file_content = self.__get_content(file_path, __params, lang)
+        file_content = self.get_content(file_path, __params, lang)
+        if not file_content:
+            return None
         file_layout = file_content["meta"].get("layout", "default.html")
 
         template = self.env.get_template(file_layout)
@@ -53,7 +58,11 @@ class Processor(object):
         __params["page"] = file_content
         return template.render(__params)
 
-    def __get_content(self, file_path, params, lang=None):
+    @staticmethod
+    def __markdown(text):
+        return markdown.markdown(text, extensions=["extra", "attr_list"])
+
+    def get_content(self, file_path, params, lang=None, skip_ignore=False):
         with codecs.open(file_path, mode="r", encoding="utf-8") as input_file:
             text = input_file.read()
         __template = self.env.from_string(text)
@@ -63,10 +72,16 @@ class Processor(object):
             meta = yaml.safe_load(m.groupdict().get("meta", ""))
             meta["type"] = "markdown"
             content = m.groupdict().get("content", "")
+            contents = []
+            if meta.get("ignore", False) and not skip_ignore:
+                return None
             if content:
                 extender = TagExtender(self.config, meta, self.env, params)
-                content = markdown.markdown(content, extensions=["extra", "attr_list"])
+                contents = self.re_split.split(content)
+                content = self.__markdown(content)
                 content = extender.extend(content, lang)
-            return {"meta": meta, "content": content}
+                contents = query(contents).select(self.__markdown).select(lambda x: extender.extend(x, lang)).to_list()
+
+            return {"meta": meta, "content": content, "contents": contents}
         else:
-            return {"meta": {"type": "text"}, "content": text}
+            return {"meta": {"type": "text"}, "content": text, "contents": [text]}

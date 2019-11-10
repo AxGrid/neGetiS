@@ -38,7 +38,6 @@ python-thumbnails = "^0.5.1"
 pillow = "^6.2"
 lxml = "^4.4"
 python-slugify = "^4.0"
-Unidecode = "^1.1"
 
 
 

@@ -4,11 +4,11 @@
 {% for anchor in page.meta.anchors %}
       <a class="nav-link active" href="#{{ anchor.title|slugify }}">{{ anchor.title }}</a>
       {% if anchor.children and len(anchor.children) > 0 %}
-            <nav class="nav nav-pills flex-column">
-            {% for sub_anchor in anchor.children %}
-                <a class="nav-link ml-3" href="#{{ sub_anchor|slugify }}">{{ sub_anchor }}</a>
-            {% endfor %}
-            </nav>
+        <nav class="nav nav-pills flex-column">
+        {% for sub_anchor in anchor.children %}
+            <a class="nav-link ml-3" href="#{{ sub_anchor|slugify }}">{{ sub_anchor }}</a>
+        {% endfor %}
+        </nav>
       {% endif %}
 {% endfor %}
     </nav>

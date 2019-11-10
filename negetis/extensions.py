@@ -9,6 +9,7 @@ from jinja2 import contextfunction
 from os.path import relpath
 from slugify import slugify
 from asq import query
+from glob import glob
 
 _ = i18n.t
 log = get_logger()
@@ -18,12 +19,14 @@ class Extensions(object):
     """
     Расширения шаблонного двига
     """
-    def __init__(self, config, env):
+    def __init__(self, config, env, processor):
         self.config = config
         self.env = env
+        self.processor = processor
         self.env.globals["static"] = self.static
         self.env.globals["slugify"] = slugify
         self.env.globals["len"] = len
+        self.env.globals["sub_items"] = self.sub_items
         self.env.filters["slugify"] = slugify
 
     @contextfunction
@@ -36,6 +39,24 @@ class Extensions(object):
         log.debug("result %s static(%s) = %s" % (context["path"], path, __path))
         to = self.config.get_target_part_root(lang)
         return relpath(__path, self.__join(to, dirname(context["path"])))
+
+    @contextfunction
+    def sub_items(self, context, path="./"):
+        """
+        Получить все элементы .md как массив
+        :param context:
+        :param path:
+        :return:
+        """
+        lang = context.get("lang", self.config.default_language)
+        __dir = os.path.dirname(context.get("file_path"))
+        __dir = join(__dir, path)
+        sub_content = []
+        for file in glob(os.path.join(__dir, "*.md"), recursive=False):
+            sub_content.append(self.processor.get_content(file, context, lang, True))
+        return sub_content
+
+
 
     @staticmethod
     def __relativity(path):

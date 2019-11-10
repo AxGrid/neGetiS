@@ -43,10 +43,15 @@ class TagExtender(object):
             "text": item.text,
             "classes": item.classes,
             "attrib": item.attrib,
-            "meta": self.meta
+            "meta": self.meta,
+
         }, self.context)
 
-        text = self.env.from_string(rules.get(key,"")).render(params)
+        log.info("%s" % params)
+        log.info("%s" % item.text)
+        log.info("%s" % params["text"])
+        log.info("%s" % rules.get(key, ""))
+        text = self.env.from_string(rules.get(key, "")).render(params)
         return fromstring("<out_temp>" + text + "</out_temp>")
 
     def __get_morphs(self, lang=None):

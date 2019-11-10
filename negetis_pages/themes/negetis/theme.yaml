@@ -22,4 +22,6 @@ morph:
         - from: p
           classes: lead
         - from: h2
-          render: '<h2 class="doc-section__title">{{ text }} <a href="#{{ text|slugify }}" class="anchor-link"><small>#</small></a></h2>'
+          render: '<h2 id="#{{ text|slugify }}" class="doc-section__title">{{ text }} <a id="{{ text|slugify }}"  class="anchor-link"><small>#</small></a></h2>'
+        - from: pre
+          classes: language-html
