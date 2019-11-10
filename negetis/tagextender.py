@@ -31,7 +31,22 @@ class TagExtender(object):
         self.meta = meta
         # TODO: Join tag_morph's
 
-    def replace(self, html):
+
+    def __build_morph(self, morph_name):
+        morph = self.config.get_morph("morph").get(morph_name)
+        if not morph:
+            return None
+        for item in morph:
+            if "render" in item:
+                item["render"] = lxml.html.fromstring(item["render"])
+        return morph
+
+
+    def replace(self, morph_name, html, lang=None):
+        morph = self.__build_morph(morph_name)
+        if not morph:
+            return html
+
         page = lxml.html.fromstring(html)
         for div in page.findall('.//div'):
             div.classes.add("my-class")
@@ -43,4 +58,4 @@ class TagExtender(object):
         for h1 in page.findall('.//h1'):
             h1.classes.add("my-class-h1")
 
-        return lxml.etree.tostring(page)
+        return lxml.html.tostring(page)

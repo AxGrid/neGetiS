@@ -164,6 +164,11 @@ class Config:
         __data = self.__get_sub_menu(self.config, lang, __data)
         return __data
 
+    def get_morph(self, lang=None):
+        __data = self.get_language_variable("morph", self.config, lang, [])
+        __data = self.get_language_variable("morph", self.theme_config, lang, [])
+        return __data
+
     @staticmethod
     def get_language_variable(name, config, lang=None, default=None):
         __data = config.get(name, default)

@@ -16,3 +16,8 @@ original:
     name: ""
     homepage: ""
     repo: ""
+
+morph:
+    doc:
+        - from: h2
+          render: <h2 class="doc-section__title">{{ content }} <a href="#{{ content }}" class="anchor-link"><small>#</small></a></h2>
