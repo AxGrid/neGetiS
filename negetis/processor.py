@@ -9,6 +9,7 @@ import markdown
 import yaml
 from .extensions import Extensions
 from .menu import Menu
+from .tagextender import TagExtender
 
 _ = i18n.t
 log = get_logger()
@@ -42,7 +43,7 @@ class Processor(object):
             "menu": self.menu.get_menu(lang, url_path)
         }
 
-        file_content = self.__get_content(file_path, __params)
+        file_content = self.__get_content(file_path, __params, lang)
         file_layout = file_content["meta"].get("layout", "default.html")
 
         template = self.env.get_template(file_layout)
@@ -52,7 +53,7 @@ class Processor(object):
         __params["page"] = file_content
         return template.render(__params)
 
-    def __get_content(self, file_path, params):
+    def __get_content(self, file_path, params, lang=None):
         with codecs.open(file_path, mode="r", encoding="utf-8") as input_file:
             text = input_file.read()
         __template = self.env.from_string(text)
@@ -63,7 +64,9 @@ class Processor(object):
             meta["type"] = "markdown"
             content = m.groupdict().get("content", "")
             if content:
+                extender = TagExtender(self.config, meta, self.env, params)
                 content = markdown.markdown(content, extensions=["extra", "attr_list"])
+                content = extender.extend(content, lang)
             return {"meta": meta, "content": content}
         else:
             return {"meta": {"type": "text"}, "content": text}

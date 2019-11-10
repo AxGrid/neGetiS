@@ -19,5 +19,7 @@ original:
 
 morph:
     doc:
+        - from: p
+          classes: lead
         - from: h2
-          render: <h2 class="doc-section__title">{{ content }} <a href="#{{ content }}" class="anchor-link"><small>#</small></a></h2>
+          render: '<h2 class="doc-section__title">{{ text }} <a href="#{{ text|slugify }}" class="anchor-link"><small>#</small></a></h2>'

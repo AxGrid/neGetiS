@@ -7,6 +7,7 @@ from .log import get_logger, fatal
 import i18n
 from jinja2 import contextfunction
 from os.path import relpath
+from slugify import slugify
 from asq import query
 
 _ = i18n.t
@@ -21,6 +22,9 @@ class Extensions(object):
         self.config = config
         self.env = env
         self.env.globals["static"] = self.static
+        self.env.globals["slugify"] = slugify
+        self.env.globals["len"] = len
+        self.env.filters["slugify"] = slugify
 
     @contextfunction
     def static(self, context, path):

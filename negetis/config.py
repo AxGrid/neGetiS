@@ -43,6 +43,7 @@ class Config:
             "menu": self.theme_config.get("menu", {}),
             "title": self.theme_config.get("title", None),
             "static": self.theme_config.get("static", "static/"),
+            "morph": self.theme_config.get("morph", {}),
             "static2": self.theme_config.get("static2", None),
             "static3": self.theme_config.get("static3", None),
         }
@@ -165,8 +166,8 @@ class Config:
         return __data
 
     def get_morph(self, lang=None):
-        __data = self.get_language_variable("morph", self.config, lang, [])
-        __data = self.get_language_variable("morph", self.theme_config, lang, [])
+        __data = self.get_language_variable("morph", self.config, lang, {})
+        __data = self.get_language_variable("morph", self.theme_config, lang, __data)
         return __data
 
     @staticmethod

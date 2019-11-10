@@ -1,8 +1,13 @@
 # coding: utf-8
 
-import re
 import lxml
-from lxml.html import fromstring
+from lxml.html import fromstring, tostring
+from deepmerge import always_merger as merge
+from .log import get_logger, fatal
+import i18n
+
+_ = i18n.t
+log = get_logger()
 
 
 class TagExtender(object):
@@ -26,36 +31,71 @@ class TagExtender(object):
                         - 17
 
     """
-    def __init__(self, config, meta):
+    def __init__(self, config, meta, env, context={}):
         self.config = config
         self.meta = meta
+        self.env = env
+        self.context = context
         # TODO: Join tag_morph's
 
+    def __transform(self, rules, key, item):
+        params = merge.merge({
+            "text": item.text,
+            "classes": item.classes,
+            "attrib": item.attrib,
+            "meta": self.meta
+        }, self.context)
 
-    def __build_morph(self, morph_name):
-        morph = self.config.get_morph("morph").get(morph_name)
-        if not morph:
-            return None
-        for item in morph:
-            if "render" in item:
-                item["render"] = lxml.html.fromstring(item["render"])
-        return morph
+        text = self.env.from_string(rules.get(key,"")).render(params)
+        return fromstring("<out_temp>" + text + "</out_temp>")
 
+    def __get_morphs(self, lang=None):
+        if "morph" in self.meta:
+            if isinstance(self.meta["morph"], str):
+                morph = self.config.get_morph(lang)
+                log.debug("morph is %s" % morph)
+                morph = morph.get(self.meta["morph"])
+            else:
+                morph = self.meta["morph"]
+            return morph
+        return None
 
-    def replace(self, morph_name, html, lang=None):
-        morph = self.__build_morph(morph_name)
-        if not morph:
+    def extend(self, html, lang=None):
+        morph = self.__get_morphs(lang)
+        if not morph or not len(morph):
             return html
 
-        page = lxml.html.fromstring(html)
-        for div in page.findall('.//div'):
-            div.classes.add("my-class")
+        log.debug("morph found %s", morph)
 
-        for p in page.findall('.//p'):
-            div.classes.add("my-class")
+        page = lxml.html.fromstring("<out_temp>" + html + "</out_temp>")
+        for rules in morph:
+            if "from" not in rules:
+                continue
 
+            log.debug("morph rules found %s" % rules)
 
-        for h1 in page.findall('.//h1'):
-            h1.classes.add("my-class-h1")
+            for item in page.findall('.//'+rules["from"]):
+                log.debug("morph item %s" % item)
+                if "classes" in rules:
+                    log.debug("morph item.classes %s add %s" % (item.classes, rules["classes"]))
+                    item.classes.add(rules["classes"])
+                if "tag" in rules:
+                    item.tag = rules["tag"]
+                if "innerText" in rules:
+                    item.text = rules["innerText"]
+                if "render" in rules:
+                    new_item = self.__transform(rules, "render", item)
+                    item.getparent().replace(item, new_item)
+                if "innerHtml" in rules:
+                    new_item = self.__transform(rules, "innerHtml", item)
+                    item.append(new_item)
+                if "addPreviousHtml" in rules:
+                    new_item = self.__transform(rules, "addPreviousHtml", item)
+                    item.addprevious(new_item)
+                if "addNextHtml" in rules:
+                    new_item = self.__transform(rules, "addNextHtml", item)
+                    item.addnext(new_item)
 
-        return lxml.html.tostring(page)
+        page_text = tostring(page).decode('utf-8')
+        log.debug("result page %s", page_text)
+        return page_text.replace("<out_temp>", "").replace("</out_temp>", "")

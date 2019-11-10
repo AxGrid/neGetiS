@@ -46,7 +46,8 @@ class Builder(object):
         for (static_prefix, static_folder) in self.config.get_static(lang=lang):
             to = self.config.get_static_part_root(lang, static_prefix)
             log.debug("copy %s to %s" % (static_folder, to))
-            copy_tree(static_folder, to)
+            if os.path.exists(static_folder):
+                copy_tree(static_folder, to)
 
     def collect_content(self):
         languages = self.config.get_all_languages_keys()
