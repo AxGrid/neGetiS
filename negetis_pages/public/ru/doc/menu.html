@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="../static/ru/doc/css/vendor/bootstrap.min.css">
+
+  <!-- Vendor/Plugins CSS -->
+  <link rel="stylesheet" href="../static/ru/doc/css/vendor/fontawesome-all.min.css">
+  <link rel="stylesheet" href="../static/ru/doc/css/vendor/prism.css">
+
+  <!-- pygments CSS -->
+  <link rel="stylesheet" href="../static/ru/doc/css/pygment.css">
+
+  <!-- Fluxo Template CSS -->
+  <link rel="stylesheet" href="../static/ru/doc/css/main.css">
+
+  <!-- Fluxo Docs CSS -->
+  <link rel="stylesheet" href="../static/ru/doc/css/docs.css">
+
+  <title>Documentation | neGetiS - Static site generator</title>
+
+  <link rel="apple-touch-icon" sizes="57x57" href="../static/ru/doc/images/favicon/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="../static/ru/doc/images/favicon/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="../static/ru/doc/images/favicon/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="../static/ru/doc/images/favicon/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="../static/ru/doc/images/favicon/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="../static/ru/doc/images/favicon/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="../static/ru/doc/images/favicon/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="../static/ru/doc/images/favicon/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../static/ru/doc/images/favicon/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="../static/ru/doc/images/favicon/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../static/ru/doc/images/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="../static/ru/doc/images/favicon/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../static/ru/doc/images/favicon/favicon-16x16.png">
+  <link rel="manifest" href="../static/ru/doc/images/favicon/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="../static/ru/doc/images/favicon/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+    <body>
+          <header class="navbar navbar-expand-lg fixed-top gradient-brand-color px-4 py-3">
+    <a class="navbar-brand" href="#"><img src="../static/ru/doc/images/logo-footer.svg" alt="Fluxo"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExample05">
+      <ul class="navbar-nav ml-auto color-white">
+        <li class="nav-item active">
+          <a class="nav-link" href="changelog.html">v1.0.1</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="changelog.html#100">What's new</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="mailto:&#104;&#101;&#108;&#108;&#111;&#064;&#119;&#101;&#098;&#111;&#116;&#104;&#046;&#117;&#115;?subject=Inquiry about Fluxo">Support</a>
+        </li>
+        <li class="nav-item nav-item--btn">
+          <a href="https://weboth.us/preview/fluxo-v1.0.0/html/index.html" class="btn btn-secondary btn-sm btn--has-shadow mt-3 mt-lg-0">Live Preview</a>
+        </li>
+      </ul>
+    </div> <!-- END Navbar -->
+
+  </header> <!-- END Header -->
+          <nav class="sidenav navbar-vertical navbar-expand-xs d-block">
+    <div class="scroll-wrapper h-100">
+      <div class="scroll-content">
+        <div class="collapse navbar-collapse">
+
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link nav--has-sub-menu sub-menu--on-right" data-toggle="collapse" href="#gettingStarted" role="button" aria-expanded="true" aria-controls="gettingStarted">Getting Started</a>
+
+              <div class="collapse show" id="gettingStarted">
+                <ul class="sidenav-sub-menu">
+                  <li class="nav-item">
+                    <a href="index.html" class="nav-link active">Introduction</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="file-structure.html" class="nav-link">File Structure</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="customization.html" class="nav-link">Customization</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="changelog.html" class="nav-link">Changelog</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link nav--has-sub-menu sub-menu--on-right" data-toggle="collapse" href="#components" role="button" aria-expanded="false" aria-controls="plugins">Components</a>
+
+              <div class="collapse" id="components">
+                <ul class="sidenav-sub-menu">
+                  <li class="nav-item">
+                    <a href="typography.html" class="nav-link">Typography</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="alerts.html" class="nav-link">Alerts</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="badges.html" class="nav-link">Badges</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="buttons.html" class="nav-link">Buttons</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="cards.html" class="nav-link">Cards</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="forms.html" class="nav-link">Forms</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="icons.html" class="nav-link">Icons</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="pagination.html" class="nav-link">Pagination</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link nav--has-sub-menu sub-menu--on-right" data-toggle="collapse" href="#plugins" role="button" aria-expanded="false" aria-controls="plugins">Plugins</a>
+
+              <div class="collapse" id="plugins">
+                <ul class="sidenav-sub-menu">
+                  <li class="nav-item">
+                    <a href="ajaxchimp.html" class="nav-link">Ajaxchimp</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="magnific-popup.html" class="nav-link">Magnific Popup</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="multiselect.html" class="nav-link">Multiselect</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="swiper.html" class="nav-link">Swiper</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="jquery-validate.html" class="nav-link">jQuery Validate</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link nav--has-sub-menu sub-menu--on-right" data-toggle="collapse" href="#utilities" role="button" aria-expanded="false" aria-controls="plugins">Utilities</a>
+
+              <div class="collapse" id="utilities">
+                <ul class="sidenav-sub-menu">
+                  <li class="nav-item">
+                    <a href="background.html" class="nav-link">Background</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="color.html" class="nav-link">Color</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="shadow.html" class="nav-link">Shadow</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="spacing.html" class="nav-link">Spacing</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="transform.html" class="nav-link">Transform</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </nav>
+        <main class="main">
+        <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="doc-aside d-none d-xl-inline-block order-xl-2 col-xl-3">
+  <nav id="docAsideNav" class="doc-aside__nav navbar border-left">
+    <nav class="nav nav-pills flex-column">
+
+      <a class="nav-link active" href="#meniu">Меню</a>
+      
+
+      <a class="nav-link active" href="#avto-meniu">Авто меню</a>
+      
+
+    </nav>
+  </nav>
+</div> <!-- END Doc Aside -->
+            
+<div class="doc-content order-xl-1 col-lg-9 col-xl-8 offset-xl-1">
+    
+    <div class="doc-section mb-5">
+        <h2 id="#meniu" class="doc-section__title">&#1052;&#1077;&#1085;&#1102; <a id="meniu" class="anchor-link"><small>#</small></a></h2><h4>&#1057;&#1086;&#1079;&#1076;&#1072;&#1085;&#1080;&#1077; &#1084;&#1077;&#1085;&#1102; &#1074; &#1082;&#1086;&#1085;&#1092;&#1080;&#1075;&#1091;&#1088;&#1072;&#1094;&#1080;&#1086;&#1085;&#1085;&#1086;&#1084; &#1092;&#1072;&#1081;&#1083;&#1077; (config.yaml, theme.yaml)</h4>
+<p class="lead">&#1052;&#1077;&#1085;&#1102; &#1089;&#1072;&#1081;&#1090;&#1072; &#1084;&#1086;&#1078;&#1085;&#1086; &#1089;&#1086;&#1079;&#1076;&#1072;&#1074;&#1072;&#1090;&#1100; &#1082;&#1072;&#1082; &#1089; &#1092;&#1072;&#1081;&#1083;&#1077; &#1090;&#1077;&#1084;&#1099; &#1090;&#1072;&#1082; &#1080; &#1074; &#1075;&#1083;&#1072;&#1074;&#1085;&#1086;&#1084; &#1082;&#1086;&#1085;&#1092;&#1080;&#1075;&#1091;&#1088;&#1072;&#1094;&#1080;&#1086;&#1085;&#1085;&#1086;&#1084; &#1092;&#1072;&#1081;&#1083;&#1077;.
+&#1044;&#1083;&#1103; &#1087;&#1086;&#1076;&#1076;&#1077;&#1088;&#1078;&#1082;&#1080; &#1084;&#1085;&#1086;&#1075;&#1086;&#1103;&#1079;&#1099;&#1095;&#1085;&#1086;&#1089;&#1090;&#1080; &#1084;&#1086;&#1078;&#1085;&#1086; &#1089;&#1086;&#1079;&#1076;&#1074;&#1072;&#1090;&#1100; &#1088;&#1072;&#1079;&#1085;&#1099;&#1077; &#1084;&#1077;&#1085;&#1102;, &#1082;&#1072;&#1078;&#1076;&#1086;&#1077; &#1074; &#1089;&#1074;&#1086;&#1077;&#1084; &#1103;&#1079;&#1099;&#1082;&#1077;.</p>
+<p class="lead">&#1042;&#1086;&#1090; &#1073;&#1072;&#1079;&#1086;&#1074;&#1072;&#1103; &#1089;&#1088;&#1091;&#1082;&#1090;&#1091;&#1088;&#1072; &#1084;&#1077;&#1085;&#1102; &#1089;&#1072;&#1081;&#1090;&#1072;:</p>
+<div class="codehilite"><pre class="language-html"><span></span><span class="nt">menu</span><span class="p">:</span>                                <span class="c1"># &#1089;&#1083;&#1086;&#1079;&#1076;&#1072;&#1085;&#1080;&#1077; &#1084;&#1077;&#1085;&#1102;</span>
+    <span class="nt">main</span><span class="p">:</span>                            <span class="c1"># &#1085;&#1072;&#1079;&#1079;&#1072;&#1085;&#1080;&#1077; &#1084;&#1077;&#1085;&#1102; (&#1084;&#1086;&#1078;&#1077;&#1090; &#1073;&#1099;&#1090;&#1100; &#1086;&#1087;&#1091;&#1097;&#1077;&#1085;)</span>
+      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">get-start</span>              <span class="c1"># &#1091;&#1085;&#1080;&#1082;&#1072;&#1083;&#1100;&#1085;&#1086;&#1077; &#1080;&#1084;&#1103; &#1087;&#1091;&#1085;&#1082;&#1090;&#1086; &#1084;&#1077;&#1085;&#1102;</span>
+        <span class="nt">link</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/doc/index.html</span>        <span class="c1"># &#1089;&#1089;&#1099;&#1083;&#1082;&#1072; </span>
+        <span class="nt">title</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&#1041;&#1099;&#1089;&#1090;&#1088;&#1099;&#1081; &#1089;&#1090;&#1072;&#1088;&#1090;</span>         <span class="c1"># &#1079;&#1072;&#1075;&#1086;&#1083;&#1086;&#1074;&#1086;&#1082;</span>
+        <span class="nt">weight</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>                    <span class="c1"># &#1087;&#1086;&#1088;&#1103;&#1076;&#1086;&#1082; &#1089;&#1086;&#1088;&#1090;&#1080;&#1088;&#1086;&#1074;&#1082;&#1080;</span>
+        <span class="nt">children</span><span class="p">:</span>                    <span class="c1"># &#1085;&#1072;&#1089;&#1083;&#1077;&#1076;&#1085;&#1080;&#1082;&#1080;</span>
+          <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">struct</span>
+            <span class="nt">link</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/doc/struct.html</span>
+            <span class="nt">title</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&#1057;&#1090;&#1088;&#1091;&#1082;&#1090;&#1091;&#1088;&#1072; &#1087;&#1088;&#1086;&#1077;&#1082;&#1090;&#1072;</span>
+          <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">menu</span>
+            <span class="nt">link</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/doc/menu.html</span>
+            <span class="nt">title</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&#1052;&#1077;&#1085;&#1102;</span>
+</pre></div>
+
+
+<p class="lead">&#1053;&#1080;&#1078;&#1077; &#1073;&#1091;&#1076;&#1077;&#1090; &#1088;&#1072;&#1089;&#1089;&#1082;&#1072;&#1079;&#1072;&#1085;&#1086; &#1087;&#1088;&#1086; &#1082;&#1072;&#1078;&#1076;&#1099;&#1081; &#1101;&#1083;&#1077;&#1084;&#1077;&#1085;&#1090; &#1082;&#1085;&#1086;&#1092;&#1080;&#1075;&#1091;&#1088;&#1072;&#1094;&#1080;&#1080; &#1087;&#1086;&#1076;&#1088;&#1086;&#1073;&#1085;&#1077;&#1077;</p>
+<h5>name</h5>
+<p class="lead">&#1059;&#1085;&#1080;&#1082;&#1072;&#1083;&#1100;&#1085;&#1086;&#1077; &#1084;&#1080;&#1103; &#1084;&#1077;&#1085;&#1102;, &#1087;&#1086; &#1085;&#1077;&#1084;&#1091; &#1084;&#1086;&#1078;&#1085;&#1086; &#1086;&#1089;&#1091;&#1097;&#1077;&#1090;&#1089;&#1074;&#1083;&#1103;&#1090;&#1100; &#1087;&#1086;&#1080;&#1089;&#1082; &#1101;&#1083;&#1077;&#1084;&#1077;&#1085;&#1090;&#1086;&#1074; &#1074; &#1084;&#1077;&#1085;&#1102;. 
+&#1040; &#1090;&#1072;&#1082;-&#1078;&#1077; &#1082; &#1085;&#1077;&#1084;&#1091; &#1084;&#1086;&#1078;&#1085;&#1086; &#1087;&#1088;&#1080;&#1074;&#1103;&#1079;&#1072;&#1090;&#1100; &#1089;&#1090;&#1088;&#1072;&#1085;&#1080;&#1094;&#1099; &#1089;&#1072;&#1081;&#1090;&#1072;, &#1087;&#1086;&#1076;&#1088;&#1086;&#1073;&#1085;&#1077;&#1077; &#1087;&#1088;&#1086; &#1101;&#1090;&#1086; &#1084;&#1086;&#1078;&#1085;&#1086; &#1087;&#1088;&#1086;&#1095;&#1080;&#1090;&#1072;&#1090;&#1100; <a href="%22./meta.html">&#1090;&#1091;&#1090;</a></p>
+<h5>link</h5>
+<p class="lead">&#1057;&#1089;&#1099;&#1083;&#1082;&#1072; &#1082;&#1086;&#1090;&#1086;&#1088;&#1099;&#1077; &#1084;&#1086;&#1078;&#1085;&#1086; &#1073;&#1091;&#1076;&#1077;&#1090; &#1080;&#1089;&#1087;&#1086;&#1083;&#1100;&#1079;&#1086;&#1074;&#1072;&#1090;&#1100; &#1074; &#1096;&#1072;&#1073;&#1083;&#1086;&#1085;&#1077; &#1087;&#1088;&#1080; &#1087;&#1086;&#1089;&#1084;&#1090;&#1088;&#1086;&#1077;&#1085;&#1080;&#1080; &#1084;&#1077;&#1085;&#1102;. 
+&#1058;&#1072;&#1082;-&#1078;&#1077; &#1086;&#1090; &#1101;&#1090;&#1086;&#1081; &#1089;&#1089;&#1099;&#1083;&#1082;&#1077; &#1086;&#1090;&#1089;&#1090;&#1088;&#1072;&#1080;&#1074;&#1072;&#1102;&#1090;&#1089;&#1103; &#1093;&#1083;&#1077;&#1073;&#1085;&#1099;&#1077; &#1082;&#1088;&#1086;&#1096;&#1082;&#1080; &#1080; &#1072;&#1082;&#1090;&#1080;&#1074;&#1085;&#1086;&#1089;&#1090;&#1100;</p>
+<h5>title, title2, title3</h5>
+<p class="lead">&#1047;&#1072;&#1075;&#1086;&#1083;&#1086;&#1074;&#1086;&#1082;&#1080; &#1084;&#1077;&#1085;&#1102; &#1076;&#1083;&#1103; &#1074;&#1099;&#1074;&#1086;&#1076;&#1072;</p>
+<h5>params</h5>
+<p class="lead">&#1044;&#1086;&#1087;&#1086;&#1083;&#1085;&#1080;&#1090;&#1077;&#1083;&#1100;&#1085;&#1099;&#1077; &#1087;&#1072;&#1088;&#1072;&#1084;&#1077;&#1085;&#1090;&#1099; &#1082;&#1086;&#1090;&#1086;&#1088;&#1099;&#1077; &#1084;&#1086;&#1078;&#1085;&#1086; &#1073;&#1091;&#1076;&#1077;&#1090; &#1087;&#1086;&#1083;&#1091;&#1095;&#1080;&#1090;&#1100; &#1074; &#1101;&#1083;&#1077;&#1084;&#1077;&#1085;&#1090;&#1072;&#1093; &#1084;&#1077;&#1085;&#1102;.
+&#1059;&#1082;&#1072;&#1079;&#1099;&#1074;&#1072;&#1102;&#1090;&#1089;&#1103; &#1074; &#1074;&#1080;&#1076;&#1077; &#1082;&#1083;&#1102;&#1095; - &#1079;&#1085;&#1072;&#1095;&#1077;&#1085;&#1080;&#1077;.</p>
+<div class="codehilite"><pre class="language-html"><span></span> <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">get-start</span>         
+   <span class="nt">params</span><span class="p">:</span>
+      <span class="nt">key1</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">value1</span>
+      <span class="nt">key2</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">value2</span>
+</pre></div>
+
+
+<h5>weight</h5>
+<p class="lead">&#1042;&#1077;&#1089; &#1087;&#1091;&#1085;&#1082;&#1090;&#1072; &#1084;&#1077;&#1085;&#1102;, &#1087;&#1086;&#1088;&#1103;&#1076;&#1086;&#1082; &#1089;&#1086;&#1088;&#1090;&#1080;&#1088;&#1086;&#1074;&#1082;&#1080; &#1086;&#1090; &#1084;&#1077;&#1085;&#1100;&#1096;&#1077;&#1075;&#1086; &#1082; &#1073;&#1086;&#1083;&#1096;&#1077;&#1084;&#1091;. (&#1087;&#1086; &#1091;&#1084;&#1086;&#1083;&#1095;&#1072;&#1085;&#1080;&#1102;: 0)</p>
+<h5>visible</h5>
+<p class="lead">&#1042;&#1080;&#1076;&#1080;&#1084;&#1086;&#1089;&#1090;&#1100; &#1087;&#1091;&#1085;&#1082;&#1090;&#1072; &#1084;&#1077;&#1085;&#1102; (&#1087;&#1086; &#1091;&#1084;&#1086;&#1083;&#1095;&#1072;&#1085;&#1080;&#1102;: true)</p>
+<h5>children</h5>
+<p class="lead">&#1055;&#1086;&#1076;&#1084;&#1077;&#1085;&#1102; &#1082; &#1090;&#1077;&#1082;&#1091;&#1097;&#1077;&#1084;&#1091; &#1087;&#1091;&#1085;&#1082;&#1090;&#1091;, &#1089;&#1086;&#1076;&#1077;&#1088;&#1076;&#1080;&#1090; &#1090;&#1072;&#1082;&#1091;&#1102;-&#1078;&#1077; &#1089;&#1090;&#1088;&#1091;&#1082;&#1090;&#1091;&#1088;&#1091; &#1082;&#1072;&#1082; &#1080; &#1086;&#1089;&#1085;&#1086;&#1074;&#1085;&#1086;&#1077; &#1084;&#1077;&#1085;&#1102;.</p>
+<h2 id="#avto-meniu" class="doc-section__title">&#1040;&#1074;&#1090;&#1086;-&#1084;&#1077;&#1085;&#1102; <a id="avto-meniu" class="anchor-link"><small>#</small></a></h2><p class="lead">&#1052;&#1077;&#1085;&#1102; &#1084;&#1086;&#1078;&#1085;&#1086; &#1089;&#1086;&#1079;&#1076;&#1072;&#1074;&#1072;&#1090;&#1100; &#1072;&#1074;&#1090;&#1086;&#1084;&#1072;&#1090;&#1080;&#1095;&#1080;&#1089;&#1082;&#1080; &#1080;&#1079; &#1082;&#1072;&#1090;&#1072;&#1083;&#1086;&#1075;&#1072;.
+&#1076;&#1083;&#1103; &#1101;&#1090;&#1086;&#1075;&#1086; &#1091;&#1082;&#1072;&#1079;&#1099;&#1074;&#1077;&#1090;&#1089;&#1103; &#1090;&#1077;&#1075; <code>auto:</code></p>
+<p class="lead">&#1050;&#1086;&#1085;&#1092;&#1080;&#1075;&#1091;&#1088;&#1072;&#1094;&#1080;&#1103; &#1073;&#1091;&#1076;&#1077;&#1090; &#1074;&#1099;&#1075;&#1083;&#1103;&#1076;&#1077;&#1090;&#1100; &#1089;&#1083;&#1077;&#1076;&#1091;&#1102;&#1097;&#1080;&#1084; &#1086;&#1073;&#1088;&#1072;&#1079;&#1086;&#1084;:</p>
+<div class="codehilite"><pre class="language-html"><span></span><span class="nt">menu</span><span class="p">:</span>                           <span class="c1"># &#1089;&#1083;&#1086;&#1079;&#1076;&#1072;&#1085;&#1080;&#1077; &#1084;&#1077;&#1085;&#1102;</span>
+    <span class="nt">main</span><span class="p">:</span>                       <span class="c1"># &#1085;&#1072;&#1079;&#1079;&#1072;&#1085;&#1080;&#1077; &#1084;&#1077;&#1085;&#1102; (&#1084;&#1086;&#1078;&#1077;&#1090; &#1073;&#1099;&#1090;&#1100; &#1086;&#1087;&#1091;&#1097;&#1077;&#1085;)</span>
+      <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">get-start</span>         <span class="c1"># &#1091;&#1085;&#1080;&#1082;&#1072;&#1083;&#1100;&#1085;&#1086;&#1077; &#1080;&#1084;&#1103; &#1087;&#1091;&#1085;&#1082;&#1090;&#1086; &#1084;&#1077;&#1085;&#1102;</span>
+        <span class="nt">link</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/index.html</span>       <span class="c1"># &#1089;&#1089;&#1099;&#1083;&#1082;&#1072; </span>
+        <span class="nt">title</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&#1041;&#1099;&#1089;&#1090;&#1088;&#1099;&#1081; &#1089;&#1090;&#1072;&#1088;&#1090;</span>    <span class="c1"># &#1079;&#1072;&#1075;&#1086;&#1083;&#1086;&#1074;&#1086;&#1082;</span>
+        <span class="nt">weight</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>               <span class="c1"># &#1087;&#1086;&#1088;&#1103;&#1076;&#1086;&#1082; &#1089;&#1086;&#1088;&#1090;&#1080;&#1088;&#1086;&#1074;&#1082;&#1080;</span>
+        <span class="nt">auto</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/doc/</span>             <span class="c1"># &#1086;&#1090;&#1089;&#1090;&#1088;&#1086;&#1080;&#1090; &#1074;&#1089;&#1077; &#1101;&#1083;&#1077;&#1084;&#1077;&#1085;&#1090;&#1099; &#1080;&#1079; &#1082;&#1072;&#1090;&#1072;&#1083;&#1086;&#1075;&#1072; /doc</span>
+</pre></div>
+        <hr class="my-5">
+    </div>
+    
+</div>
+
+        </div>
+        </div>
+        </main>
+
+        <!-- Global Required JS -->
+        <script src="../static/ru/doc/js/vendor/jquery-3.3.1.min.js"></script>
+        <script src="../static/ru/doc/js/vendor/bootstrap.min.js"></script>
+
+        <!-- Vendor/Plugins JS -->
+        <script src="../static/ru/doc/js/vendor/prism.js"></script>
+        <script src="../static/ru/doc/js/vendor/prism-scss-sassdoc.js"></script>
+        <script src="../static/ru/doc/js/vendor/clipboard.min.js"></script>
+
+        <!-- Vendor/Plugins JS Init -->
+        <script type="text/javascript" src="../static/ru/doc/js/init/wb.clipboard-init.js"></script>
+
+        <!-- Template JS -->
+        <script src="../static/ru/doc/js/min/main-min.js"></script>
+
+
+    </body>
+</html>

@@ -60,7 +60,7 @@ class Processor(object):
 
     @staticmethod
     def __markdown(text):
-        return markdown.markdown(text, extensions=["extra", "attr_list"])
+        return markdown.markdown(text, extensions=["extra", "attr_list", "codehilite"])
 
     def get_content(self, file_path, params, lang=None, skip_ignore=False):
         with codecs.open(file_path, mode="r", encoding="utf-8") as input_file:
